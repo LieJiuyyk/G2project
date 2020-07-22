@@ -11,6 +11,7 @@ namespace G2_MVC_EF.Controllers
     
     public class IndexController : Controller
     {
+
         // GET: Index
         public Models.MyDBContext db = new Models.MyDBContext();
         public ActionResult Index()
