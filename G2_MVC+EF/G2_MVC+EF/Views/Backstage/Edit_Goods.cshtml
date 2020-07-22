@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Ecit_Goods</title>
+    <style>
+        body {
+            background-color: #83c3f3;
+        }
+
+        input {
+            width: 500px;
+            margin: 10px;
+            height: 24px;
+            line-height: 24px;
+            border-radius: 3px;
+            border: 1px solid #808080;
+        }
+
+        #add {
+            margin: 0px auto;
+            text-align: center;
+        }
+
+        #btn {
+            width: 200px;
+            height: 30px;
+            font-size: 18px;
+            letter-spacing: 25px;
+            line-height: 30px;
+            text-align: center;
+            background: #1844db;
+        }
+    </style>
+</head>
+<body>
+    <div id="add">
+        <form name="form1" action="/Backstage/EditGoods" method="post" enctype="multipart/form-data">
+            <div>
+                <h2>修改商品</h2>
+                商品编号：<input type="text" name="ComId" value="@ViewBag.model.ComId" /><br />
+                商品名称：<input type="text" name="CName" value="@ViewBag.model.CName" /><br />
+                商品价格：<input type="text" name="Cprice" value="@ViewBag.model.Cprice" /><br />
+                图片地址1：<input type="file" name="CpicUrl1" value="@ViewBag.model.CpicUrl1" /><br />
+                图片地址2：<input type="file" name="CpicUrl2" value="@ViewBag.model.CpicUrl2" /><br />
+                图片地址3：<input type="file" name="CpicUrl3" value="@ViewBag.model.CpicUrl3" /><br />
+                图片地址4：<input type="file" name="CpicUrl4" value="@ViewBag.model.CpicUrl4" /><br />
+                图片地址5：<input type="file" name="CpicUrl5" value="@ViewBag.model.CpicUrl5" /><br />
+                图片地址6：<input type="file" name="CpicUrl6" value="@ViewBag.model.CpicUrl6" /><br />
+                品牌编号：<input type="text" name="Bid" value="@ViewBag.model.Bid" /><br />
+                商家编号：<input type="text" name="CateID" value="@ViewBag.model.CateID" /><br />
+                <br />
+                <input id="btn" type="submit" name="sub" value="提交" />
+            </div>
+        </form>
+    </div>
+</body>
+</html>

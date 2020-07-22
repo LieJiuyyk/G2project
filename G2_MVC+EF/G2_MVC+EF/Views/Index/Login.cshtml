@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_MuBan2.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <title>登录页面</title>
+    <script src="~/Scripts/LoginCss.js"></script>
+    <link href="~/Content/Logincss.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <div id="Login_box">
+       <div class="lpgin_nav">
+           <h2>欢迎登录</h2>
+       </div>
+        <div class="center_box">
+            <div class="Login_boxcenter">
+                <div class="texttitel">
+                    <div class="login_head">
+                        <h1>登录</h1>
+                        <h5><a href="#">没有账号？去注册吧>></a></h5>
+                        @ViewBag.login
+                    </div>
+                   
+                    <div class="box_txt">
+                            <div class="usernametxt">
+                                <span class="iisp">账号:</span>
+                                <input type="text" name="Username" class="userTexbox" placeholder="请输入账号" onblur="checkuser()" />
+                                <span class="txt1"></span>
+                            </div>
+                            <div></div>
+                            <div class="userpwd">
+                                <span class="iisp">密码：</span>
+                                <input type="password" name="Userpwd" class="userpwdbox" placeholder="密码" onblur="checkowd1()" />
+                                <span class="txt3"></span>
+                            </div>
+                            <div class="userbtn">
+                                <input type="submit" class="loginbtn" value="登录" />
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

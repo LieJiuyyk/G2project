@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Categet";
+    Layout = "~/Views/Shared/_Cate.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="~/Content/index.css" rel="stylesheet" />
+    <script src="~/Scripts/underscore.js"></script>
+    <script src="~/Scripts/loading.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="cate_box">
+        @foreach (var item in ViewData["Categet"] as List<G2_MVC_EF.Models.Commodity>)
+        {
+            <div class="tdbox">
+                <a href="#">
+                    <dl>
+                        <dt>
+                            <a href="/index/shangpxq?id=@item.ComId"><img class="samLazyImg" src="/images/Loadging.gif" data-src="/images/@item.CpicUrl1" alt="" /></a>
+                        </dt>
+                        <dd class="index_text">@item.CName</dd>
+                        <dd class="index_pirce">￥@item.Cprice.ToString().Split('.')[0]</dd>
+                    </dl>
+                </a>
+            </div>
+        }
+    </div>
+</body>
+</html>

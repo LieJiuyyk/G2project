@@ -1,0 +1,155 @@
+﻿@using G2_MVC_EF.Models.fenye
+@using G2_MVC_EF.Models
+@model PagingHelper<Commodity>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Goods</title>
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <link href="~/Content/Goods.css" rel="stylesheet" />
+    <script>
+        $(function () {
+            $("#chaxun").click(function () {
+                $.get("/Backstage/getGoods", { text: $("#cx_text").val() }, function (data) {
+                }, "json");
+                location.reload([true]);
+            });
+        });
+
+        function get(index) {
+            $.post("/Backstage/model_Goods", { id: index }, function (data) { 
+                var modelstr = " <p>商品编号：" + data.ComId + "</p> <p>商品名称：" + data.CName + "</p> <p>商品价格：" + data.Cprice + "</p><p>图片地址1：" + data.CpicUrl1 + "</p><p>图片地址2：" + data.CpicUrl2 + "</p><p>图片地址3：" + data.CpicUrl3 + "</p><p>图片地址4：" + data.CpicUrl4 + "</p><p>图片地址5：" + data.CpicUrl5 + "</p><p>图片地址6：" + data.CpicUrl6 + "</p><p>品牌编号：" + data.Bid + "</p><p>商家编号：" + data.CateID + "</p>";
+                $("#div_model").append(modelstr);
+                var modelstr = "";                
+            },"json");
+        }
+
+        function Edit(index) {
+            $.get("/Backstage/Edit_Goods", { id: index }, function (data) {
+                window.location.href = "/Backstage/Edit_Goods/" + index;
+            });
+        }
+
+        function Det(index) {
+            var tf = confirm("确定删除吗？？？");
+            if (tf) {
+                $.get("/Backstage/Det_Goods", { id: index }, function (data) {
+
+                }, "json");
+            }
+        }
+
+
+        //弹出隐藏层
+        function ShowDiv(show_div, bg_div) {
+            document.getElementById(show_div).style.display = 'block';
+            document.getElementById(bg_div).style.display = 'block';
+            var bgdiv = document.getElementById(bg_div);
+            bgdiv.style.width = document.body.scrollWidth;
+            // bgdiv.style.height = $(document).height();
+            $("#" + bg_div).height($(document).height());
+        };
+        //关闭弹出层
+        function CloseDiv(show_div, bg_div) {
+            document.getElementById(show_div).style.display = 'none';
+            document.getElementById(bg_div).style.display = 'none';
+            $("#div_model").html("");
+        };
+    </script>
+</head>
+<body>
+    <div>
+        <h1>商品管理</h1>
+        <div id="div_head">
+            <p>名称：<input id="cx_text" type="text" value="" /><input type="button" id="chaxun" value="查询"></p>
+            <p><a href="/Backstage/Add_Goods" style="font-size:18px"><img width="18" height="18" src="~/images/添加.gif" />添加商品</a></p>
+        </div>
+        
+        <table id="tb">
+            <tr style="background:#00ffff">
+                <td>商品编号</td>
+                <td class="line">商品名称</td>
+                <td class="line">商品价格</td>
+                <td class="line">图片1</td>
+                <td class="line">图片2</td>
+                <td class="line">图片3</td>
+                <td class="line">图片4</td>
+                <td class="line">图片5</td>
+                <td class="line">图片6</td>
+                <td>品牌编号</td>
+                <td>商家编号</td>
+                <td>操作</td>
+            </tr>
+            @foreach (var item in Model.GetPagingData())
+            {
+                <tr>
+                    <td>@item.ComId</td>
+                    <td class="line">@item.CName</td>
+                    <td class="line">￥@item.Cprice</td>
+                    <td class="line">@item.CpicUrl1</td>
+                    <td class="line">@item.CpicUrl2</td>
+                    <td class="line">@item.CpicUrl3</td>
+                    <td class="line">@item.CpicUrl4</td>
+                    <td class="line">@item.CpicUrl5</td>
+                    <td class="line">@item.CpicUrl6</td>
+                    <td>@item.Bid</td>
+                    <td>@item.CateID</td>
+                    <td>
+                        <a href="javascript:get(@item.ComId);" onclick="ShowDiv('MyDiv','fade')"><img width="15" height="15" src="~/images/查看.gif" /> 查看</a>|
+                        <a href="javascript:Edit(@item.ComId);"><img width="15" height="15" src="~/images/修改.gif" /> 修改</a>|
+                        <a href="javascript:Det(@item.ComId);"><img width="18" height="18" src="~/images/删除.png" /> 删除</a>
+                    </td>
+                </tr>
+
+            }
+        </table>
+        <div id="div_fy">
+            <div>第<a href="#">@Model.PageIndex</a>页/共<a href="#">@Model.PageCount</a>页</div>
+            <div>
+                @if (Model.HasPrev)
+                {
+                    <a class="fy_btn" href="@Url.Action("Goods", "Backstage",new { pageIndex = 1})">首页</a>
+                    <a class="fy_btn" href="@Url.Action("Goods", "Backstage", new { pageIndex = Model.PageIndex - 1 })">上一页</a>
+                }
+                else
+                {
+                    <em class="fy_btn" style="color:Gray">首页</em>
+                    <em class="fy_btn" style="color:Gray">上一页</em>
+                }
+                <a class="fy_txt" href="#">@Model.PageIndex</a>
+                @if (Model.HasNext)
+                {
+                    <a class="fy_btn" href="@Url.Action("Goods", "Backstage", new { pageIndex = Model.PageIndex + 1 })">下一页</a>
+                    <a class="fy_btn" href="@Url.Action("Goods", "Backstage",new { pageIndex = Model.PageCount})">尾页</a>
+                }
+                else
+                {
+                    <em class="fy_btn" style="color:Gray">下一页</em>
+                    <em class="fy_btn" style="color:Gray">尾页</em>
+                }
+            </div>
+            <div>每页7条/共<a href="#">@Model.DataSource.Count()</a>条</div>
+        </div>
+
+
+        <!--弹出层时背景层DIV-->
+        <div id="fade" class="black_overlay">
+        </div>
+        <div id="MyDiv" class="white_content">
+            <div style="text-align: right; cursor: default; height: 40px;">
+                <span style="font-size: 16px;padding:10px" onclick="CloseDiv('MyDiv','fade')">关闭</span>
+            </div>
+            <h2 style="margin-left:10%">商品详情</h2>
+            <div id="div_model">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
