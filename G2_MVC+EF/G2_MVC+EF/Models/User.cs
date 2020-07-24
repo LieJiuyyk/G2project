@@ -25,7 +25,7 @@ namespace G2_MVC_EF.Models
         [StringLength(18)]
         public string UserPwd { get; set; }
 
-        [StringLength(12)]
+        [StringLength(20)]
         public string Userphone { get; set; }
 
         [StringLength(10)]

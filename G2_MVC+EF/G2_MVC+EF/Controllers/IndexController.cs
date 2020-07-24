@@ -26,25 +26,48 @@ namespace G2_MVC_EF.Controllers
         {
             return View();
         }
+        //注册
+        public ActionResult sginup()
+        {
+            return View();
+        }
+        public ActionResult Getsginup(string Username, string email, string password)
+        {
+           var so= db.User.FirstOrDefault(a => a.UserAccount == Username);
+            if (so==null)
+            {
+                G2_MVC_EF.Models.User user = new User();
+                user.UserAccount = Username;
+                user.Userphone = email;
+                user.UserPwd = password;
+                db.User.Add(user);
+                int i = db.SaveChanges();
+                if (i == 1)
+                {
+                    return Redirect("/Index/Login");
+                }
+            }
+            else
+            {
+                return Content("<script>alert('用户已被注册');window.location.href='/Index/sginup';</script>");
+            }
+            return Content("<script>alert('注册失败');</script>");
+
+        }
+        //登录
         public ActionResult Loginget(string Username,string Userpwd)
         {
 
             var i = db.User.SingleOrDefault(a=>(a.UserAccount== Username && a.UserPwd== Userpwd));
+            Session["userID"]= i.Uid;
             if (i != null)
             {
-                HttpCookie cookie1 = new HttpCookie("username");
-                cookie1.Value = i.Uid.ToString();
-                Response.AppendCookie(cookie1);
-                HttpCookie cookie2 = new HttpCookie("usertype");
-                cookie2.Value = i.UserType.ToString();
-                Response.AppendCookie(cookie2);
                 return Content("{\"isdat\":\"true\"}");
             }
             else
                 return Content("{\"isdat\":\"false\"}");
-
-
         }
+
         public ActionResult Categet(int id)
         {
 
@@ -72,10 +95,14 @@ namespace G2_MVC_EF.Controllers
         //}
         public string Gettxt1(string text)
         {
-            List<Commodity> list = new List<Commodity>();
-            list = db.Commodity.Where(a => a.CName.Contains(text)).ToList();
+            List<ShopClass> list = new List<ShopClass>();
+            list = db.Commodity.Where(a => a.CName.Contains(text)).Select(a=>new ShopClass{CName=a.CName,ComId=a.ComId }).ToList();
             return JsonConvert.SerializeObject(list);
         }
-
+        //购物车
+        public ActionResult BuyCart()
+        {
+            return View();
+        }
     }
 }
