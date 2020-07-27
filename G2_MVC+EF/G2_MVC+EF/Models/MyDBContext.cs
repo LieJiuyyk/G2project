@@ -8,7 +8,7 @@ namespace G2_MVC_EF.Models
     public partial class MyDBContext : DbContext
     {
         public MyDBContext()
-            : base("name=MyDBContext")
+            : base("name=MyDBContext1")
         {
         }
 

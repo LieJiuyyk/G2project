@@ -6,9 +6,9 @@ $(function () {
         $(".searchBox_nav").css("display", "none");
     });
 
-    $("#searchBox_bomnav").blur(function () {
-        $(".searchBox_bomnav").css("display", "none");
-        $(".searchBox_nav").css("display", "block");
+    $(".searchBox_bomnav").blur(function () {
+        $(".searchBox_bomnav").css("display", "none"); 
+        $(".searchBox_nav").css("display", "none");
     });
     if (cookieValue1 != null) {
         $(".login").css("display", "none");

@@ -105,6 +105,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\carts.css" />
     <Content Include="Content\index.html" />
+    <Content Include="images\BuyCrtPic.gif" />
     <Content Include="Scripts\carts.js" />
     <Content Include="Content\Goods.css" />
     <Content Include="Content\HtmlPage1.html" />
@@ -2444,6 +2445,7 @@
     <Content Include="Views\Index\Login.cshtml" />
     <Content Include="Views\Index\sginup.cshtml" />
     <Content Include="Views\Index\BuyCart.cshtml" />
+    <Content Include="Views\Index\BuyCartK.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

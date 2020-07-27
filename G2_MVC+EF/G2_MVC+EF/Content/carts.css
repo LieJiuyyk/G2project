@@ -27,8 +27,12 @@ a:hover{
 }
 
 
-
-.cartMain{
+.cartpic{
+    width:90%;
+    height:10em;
+    margin:0 auto;
+}
+.cartMain {
     position: relative;
     width: 1200px;
     min-width: 1200px;

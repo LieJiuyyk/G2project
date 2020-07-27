@@ -19,7 +19,26 @@ namespace G2_MVC_EF.Controllers
             ViewBag.li = db.Category.ToList();
             ViewData["messages"] = db.Brand.ToList();
             ViewData["td"] = db.Commodity.ToList();
-            
+
+            if (Session["userID"]!=null)
+            {
+                ViewBag.box = "display:none";
+                var viwe = Convert.ToInt32(Session["userID"]);
+                var ttt = db.User.SingleOrDefault(A => A.Uid == viwe);
+                ViewBag.name=ttt.UserAccount;
+                ViewBag.pic = ttt.UserPicUrl;
+                ViewBag.iii = ttt.UserAccount;
+                ViewBag.ccc = "#";
+            }
+            else
+            {
+                ViewBag.box = "";
+                ViewBag.name = "您好，[请登录]";
+                ViewBag.pic = "login.jpg";
+                ViewBag.iii = "请登录";
+                ViewBag.ccc = "Login";
+            }
+          
             return View();
         }
         public ActionResult Login()
@@ -59,10 +78,12 @@ namespace G2_MVC_EF.Controllers
         {
 
             var i = db.User.SingleOrDefault(a=>(a.UserAccount== Username && a.UserPwd== Userpwd));
-            Session["userID"]= i.Uid;
+            
             if (i != null)
             {
+                Session["userID"] = i.Uid;
                 return Content("{\"isdat\":\"true\"}");
+                
             }
             else
                 return Content("{\"isdat\":\"false\"}");
@@ -99,10 +120,36 @@ namespace G2_MVC_EF.Controllers
             list = db.Commodity.Where(a => a.CName.Contains(text)).Select(a=>new ShopClass{CName=a.CName,ComId=a.ComId }).ToList();
             return JsonConvert.SerializeObject(list);
         }
+
         //购物车
-        public ActionResult BuyCart()
+        public ActionResult BuyCartK()
         {
             return View();
+        }
+        public ActionResult BuyCart()
+        {
+
+            var uer = Convert.ToInt32(Session["userID"]);
+            var sqil = db.User.FirstOrDefault(a => a.Uid == uer);
+            
+            if (sqil==null)
+            {
+                return Content("<script>alert('请登录后查看~');window.location.href='/Index/index';</script>");
+            }
+            else
+            {
+                var catID = db.BuyCar.Where(a => a.Uid == uer).ToList();
+                if (catID.Count==0)
+                {
+                    return Redirect("/Index/BuyCartK");
+                }
+                else
+                {
+                    ViewData["carts"] = catID;
+                }
+                return View();
+            }
+          
         }
     }
 }

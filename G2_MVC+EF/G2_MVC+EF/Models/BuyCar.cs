@@ -12,8 +12,7 @@ namespace G2_MVC_EF.Models
         [Key]
         public int Bcid { get; set; }
 
-        [StringLength(50)]
-        public string BName { get; set; }
+        public int? Comid { get; set; }
 
         [StringLength(50)]
         public string BpicUrl1 { get; set; }
@@ -22,6 +21,10 @@ namespace G2_MVC_EF.Models
         public decimal? Bprice { get; set; }
 
         public int? Uid { get; set; }
+
+        [StringLength(100)]
+        public string comName { get; set; }
+        public virtual Commodity Commodity { get; set; }
 
         public virtual User User { get; set; }
     }

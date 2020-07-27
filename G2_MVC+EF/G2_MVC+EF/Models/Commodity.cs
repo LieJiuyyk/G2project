@@ -12,6 +12,7 @@ namespace G2_MVC_EF.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Commodity()
         {
+            BuyCar = new HashSet<BuyCar>();
             Comment = new HashSet<Comment>();
         }
 
@@ -47,6 +48,9 @@ namespace G2_MVC_EF.Models
         public int? CateID { get; set; }
 
         public virtual Brand Brand { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BuyCar> BuyCar { get; set; }
 
         public virtual Category Category { get; set; }
 
