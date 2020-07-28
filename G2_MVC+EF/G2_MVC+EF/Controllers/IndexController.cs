@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace G2_MVC_EF.Controllers
 {
-    
+
     public class IndexController : Controller
     {
 
@@ -20,12 +20,12 @@ namespace G2_MVC_EF.Controllers
             ViewData["messages"] = db.Brand.ToList();
             ViewData["td"] = db.Commodity.ToList();
 
-            if (Session["userID"]!=null)
+            if (Session["userID"] != null)
             {
                 ViewBag.box = "display:none";
                 var viwe = Convert.ToInt32(Session["userID"]);
                 var ttt = db.User.SingleOrDefault(A => A.Uid == viwe);
-                ViewBag.name=ttt.UserAccount;
+                ViewBag.name = ttt.UserAccount;
                 ViewBag.pic = ttt.UserPicUrl;
                 ViewBag.iii = ttt.UserAccount;
                 ViewBag.ccc = "#";
@@ -38,7 +38,7 @@ namespace G2_MVC_EF.Controllers
                 ViewBag.iii = "请登录";
                 ViewBag.ccc = "Login";
             }
-          
+
             return View();
         }
         public ActionResult Login()
@@ -52,8 +52,8 @@ namespace G2_MVC_EF.Controllers
         }
         public ActionResult Getsginup(string Username, string email, string password)
         {
-           var so= db.User.FirstOrDefault(a => a.UserAccount == Username);
-            if (so==null)
+            var so = db.User.FirstOrDefault(a => a.UserAccount == Username);
+            if (so == null)
             {
                 G2_MVC_EF.Models.User user = new User();
                 user.UserAccount = Username;
@@ -74,16 +74,16 @@ namespace G2_MVC_EF.Controllers
 
         }
         //登录
-        public ActionResult Loginget(string Username,string Userpwd)
+        public ActionResult Loginget(string Username, string Userpwd)
         {
 
-            var i = db.User.SingleOrDefault(a=>(a.UserAccount== Username && a.UserPwd== Userpwd));
-            
+            var i = db.User.SingleOrDefault(a => (a.UserAccount == Username && a.UserPwd == Userpwd));
+
             if (i != null)
             {
                 Session["userID"] = i.Uid;
                 return Content("{\"isdat\":\"true\"}");
-                
+
             }
             else
                 return Content("{\"isdat\":\"false\"}");
@@ -92,12 +92,12 @@ namespace G2_MVC_EF.Controllers
         public ActionResult Categet(int id)
         {
 
-           ViewData["Categet"] =db.Commodity.Where(a => a.CateID == id).ToList();
+            ViewData["Categet"] = db.Commodity.Where(a => a.CateID == id).ToList();
             return View();
         }
         public ActionResult shangpxq(int id)
         {
-           ViewBag.list2 =db.Commodity.SingleOrDefault(a=>a.ComId==id);
+            ViewBag.list2 = db.Commodity.SingleOrDefault(a => a.ComId == id);
             return View();
         }
 
@@ -117,7 +117,7 @@ namespace G2_MVC_EF.Controllers
         public string Gettxt1(string text)
         {
             List<ShopClass> list = new List<ShopClass>();
-            list = db.Commodity.Where(a => a.CName.Contains(text)).Select(a=>new ShopClass{CName=a.CName,ComId=a.ComId }).ToList();
+            list = db.Commodity.Where(a => a.CName.Contains(text)).Select(a => new ShopClass { CName = a.CName, ComId = a.ComId }).ToList();
             return JsonConvert.SerializeObject(list);
         }
 
@@ -126,20 +126,36 @@ namespace G2_MVC_EF.Controllers
         {
             return View();
         }
-        public ActionResult BuyCart()
+        public ActionResult ADDBuyCart(string pic, string name, int comid, int uid, decimal price)
+        {
+            Models.BuyCar buyCar = new BuyCar();
+            buyCar.BpicUrl1 = pic;
+            buyCar.comName = name;
+            buyCar.Bprice = price;
+            buyCar.Comid = comid;
+            buyCar.Uid = uid;
+            db.BuyCar.Add(buyCar);
+            int i = db.SaveChanges();
+            if (i==0)
+            {
+                return Content("<script>alert('添加失败~');</script>");
+            }
+            return Content("<script>alert('添加购物车成功~');window.location.href='/Index/index';</script>");
+        }
+        public ActionResult BuyCart() 
         {
 
             var uer = Convert.ToInt32(Session["userID"]);
             var sqil = db.User.FirstOrDefault(a => a.Uid == uer);
-            
-            if (sqil==null)
+
+            if (sqil == null)
             {
                 return Content("<script>alert('请登录后查看~');window.location.href='/Index/index';</script>");
             }
             else
             {
                 var catID = db.BuyCar.Where(a => a.Uid == uer).ToList();
-                if (catID.Count==0)
+                if (catID.Count == 0)
                 {
                     return Redirect("/Index/BuyCartK");
                 }
@@ -149,7 +165,7 @@ namespace G2_MVC_EF.Controllers
                 }
                 return View();
             }
-          
+
         }
     }
 }

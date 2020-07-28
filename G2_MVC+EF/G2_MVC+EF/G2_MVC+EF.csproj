@@ -2418,6 +2418,7 @@
     <Compile Include="Models\Commodity.cs" />
     <Compile Include="Models\fenye\PagingHelper.cs" />
     <Compile Include="Models\MyDBContext.cs" />
+    <Compile Include="Models\Orders.cs" />
     <Compile Include="Models\ShopClass.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\User.cs" />

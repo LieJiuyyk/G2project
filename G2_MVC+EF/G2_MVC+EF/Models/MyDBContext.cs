@@ -8,7 +8,7 @@ namespace G2_MVC_EF.Models
     public partial class MyDBContext : DbContext
     {
         public MyDBContext()
-            : base("name=MyDBContext1")
+            : base("name=MyDBContext")
         {
         }
 
@@ -17,6 +17,7 @@ namespace G2_MVC_EF.Models
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<Commodity> Commodity { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
 
@@ -29,6 +30,14 @@ namespace G2_MVC_EF.Models
             modelBuilder.Entity<Commodity>()
                 .Property(e => e.Cprice)
                 .HasPrecision(19, 4);
+
+            modelBuilder.Entity<Orders>()
+                .Property(e => e.Bprice)
+                .HasPrecision(19, 4);
+
+            modelBuilder.Entity<Orders>()
+                .Property(e => e.zhifuTyPe)
+                .IsFixedLength();
         }
     }
 }

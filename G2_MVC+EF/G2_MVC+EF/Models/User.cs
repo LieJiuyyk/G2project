@@ -14,6 +14,7 @@ namespace G2_MVC_EF.Models
         {
             BuyCar = new HashSet<BuyCar>();
             Comment = new HashSet<Comment>();
+            Orders = new HashSet<Orders>();
         }
 
         [Key]
@@ -42,5 +43,8 @@ namespace G2_MVC_EF.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comment { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }
