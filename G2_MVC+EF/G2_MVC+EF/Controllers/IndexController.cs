@@ -101,12 +101,12 @@ namespace G2_MVC_EF.Controllers
             return View();
         }
 
-        [HttpGet]
-        public string GetModelByID(int id)
-        {
-            Commodity commodity = db.Commodity.SingleOrDefault(a => a.ComId == id);
-            return JsonConvert.SerializeObject(commodity);
-        }
+        //[HttpGet]
+        //public string GetModelByID(int id)
+        //{
+        //    Commodity commodity = db.Commodity.SingleOrDefault(a => a.ComId == id);
+        //    return JsonConvert.SerializeObject(commodity);
+        //}
         //public string GettxtBox(string text)
         //{
 
@@ -150,6 +150,41 @@ namespace G2_MVC_EF.Controllers
                 return View();
             }
           
+        }
+        public ActionResult gei()
+        {
+            var id = Convert.ToInt32(Session["userID"]);
+            if (id>0)
+            {
+                ViewBag.lis = db.User.FirstOrDefault(a => a.Uid == id);
+                return View();
+            }
+            else
+            {
+                return View();
+            }
+                      
+        }
+        public ActionResult ziliao()
+        {
+            var id = Convert.ToInt32(Session["userID"]);
+            ViewBag.ll = db.User.FirstOrDefault(a => a.Uid == id);
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Xu(User model,int id, HttpPostedFileBase UserPicUrl)
+        {
+            User ss= db.User.FirstOrDefault(a => a.Uid == id);
+            string p = UserPicUrl.FileName;
+            string pach = Server.MapPath("~/images/" + p);
+            //保存到服务器指定文件夹中
+            UserPicUrl.SaveAs(pach);
+            ss.UserPicUrl= p;
+            ss.UserNickname = model.UserNickname;
+            ss.Userphone = model.Userphone;
+            ss.UserType = model.UserType;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
