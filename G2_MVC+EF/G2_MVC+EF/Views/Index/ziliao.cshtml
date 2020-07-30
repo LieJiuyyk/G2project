@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>详细资料</title>
+    <link href="~/Content/ziliao.css" rel="stylesheet" />
+    <script src="~/Content/ziliao.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#my-img').click(function () {
+                $('#img-upload').click();
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div class="main">
+        <div class="main0">
+            <div class="main_left">
+                <img src="/images/zhuce-image-3.png" class="theimg" />
+                <img src="/images/zhuce-image-2.png" class="secimg" />
+                <img src="/images/zhuce-image-1.png" class="firimg" />
+            </div>
+            <form action="/Index/Xu/@ViewBag.ll.Uid" method="post" enctype="multipart/form-data">
+                <div class="main_right">
+                    <div class="main_r_up" style="margin-top:20px;">
+                        <div class="head-img">
+                            <img src="/images/@ViewBag.ll.UserPicUrl" style="width:80px;height:80px;border:1px solid #808080;border-radius:50%;margin-left:160px;margin-top:10px;"id="my-img"/>
+                            <input type="file" name="UserPicUrl" value='更换头像' style="margin-top:60px;display:none;" id="img-upload" />
+                        </div>
+                    </div>
+                    <div class="sub"></div>
+                    <div class="txt">
+                        <span style="letter-spacing:10px;">名&nbsp; 称:</span>
+                        <input  type="text" name="UserNickname" class="txtphone" value="@ViewBag.ll.UserNickname" />
+                    </div>
+                    <div class="txt">
+                        <span style="letter-spacing:11px;">手机号:</span>
+                        <input name="Userphone" type="text" class="txtphone" value="@ViewBag.ll.Userphone" />
+                    </div>
+                    <div class="txt">
+                        <span style="letter-spacing:10px;">地&nbsp; 址:</span>
+                        <input name="UserType" type="text" class="txtphone" value="@ViewBag.ll.UserType" />
+                    </div>
+
+                     <input type="submit" value="修改" class="xiayibu"/> 
+                </div>
+            </form>
+            
+        </div>
+    </div>
+
+    <div class="footer">
+    </div>
+</body>
+</html>
