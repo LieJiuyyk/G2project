@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>详细资料</title>
+    <link href="~/Content/ziliao.css" rel="stylesheet" />
+    <script src="~/Content/ziliao.js"></script>
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#my-img').click(function () {
+                $('#img-upload').click();
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div class="main">
+        <div class="main0">
+            <div class="main_left">
+                <img src="/images/zhuce-image-3.png" class="theimg" />
+                <img src="/images/zhuce-image-2.png" class="secimg" />
+                <img src="/images/zhuce-image-1.png" class="firimg" />
+            </div>
+            <form action="/Index/mima2/@ViewBag.ll.Uid" method="post">
+                <div class="main_right">
+                    <div class="main_r_up" style="margin-top:20px;">
+                        <div class="head-img">
+                            <img src="/images/@ViewBag.ll.UserPicUrl" style="width:80px;height:80px;border:1px solid #808080;border-radius:50%;margin-left:160px;margin-top:10px;" id="my-img" />
+
+                        </div>
+                    </div>
+                    <div class="sub"></div>
+                  
+                    <div class="txt">
+                        <span style="letter-spacing:10px;">账&nbsp; 号:</span>
+                        <span style="margin-left:15px;">@ViewBag.ll.UserAccount</span>
+                    </div>
+                    <div class="txt">
+                        <span style="letter-spacing:11px;">旧密码:</span>
+                        <input name="pwd" type="text" class="txtphone" />
+                    </div>
+                    <div class="txt">
+                        <span style="letter-spacing:10px;">新密码:</span>
+                        <input name="UserPwd" type="text" class="txtphone" />
+                    </div>
+
+                    <input type="submit" value="修改" class="xiayibu" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="footer">
+    </div>
+</body>
+</html>

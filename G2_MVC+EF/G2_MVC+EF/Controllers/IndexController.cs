@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using System.Web.Services.Description;
 
 namespace G2_MVC_EF.Controllers
 {
@@ -97,29 +98,34 @@ namespace G2_MVC_EF.Controllers
         }
         public ActionResult shangpxq(int id)
         {
-           ViewBag.list2 =db.Commodity.SingleOrDefault(a=>a.ComId==id);
+      
+            ViewBag.list2 =db.Commodity.SingleOrDefault(a=>a.ComId==id);
+            ViewBag.ll = db.Comment.Where(a=>a.ComId==id);
             return View();
         }
 
-        //[HttpGet]
-        //public string GetModelByID(int id)
-        //{
-        //    Commodity commodity = db.Commodity.SingleOrDefault(a => a.ComId == id);
-        //    return JsonConvert.SerializeObject(commodity);
-        //}
-        //public string GettxtBox(string text)
-        //{
+        [HttpGet]
+        public string GetModelByID(int id)
+        {
+            
+            Commodity commodity = db.Commodity.SingleOrDefault(a => a.ComId == id);
+            return JsonConvert.SerializeObject(commodity);
+        }
+        public string GettxtBox(string text)
+        {
 
-        //    List<Category> list = new List<Category>();
-        //    list = db.Category.Where(a => a.CateName.Contains(text)).ToList();
-        //    return JsonConvert.SerializeObject(list).ToString();
-        //}
+            List<Category> list = new List<Category>();
+            list = db.Category.Where(a => a.CateName.Contains(text)).ToList();
+            return JsonConvert.SerializeObject(list).ToString();
+        }
         public string Gettxt1(string text)
         {
             List<ShopClass> list = new List<ShopClass>();
             list = db.Commodity.Where(a => a.CName.Contains(text)).Select(a=>new ShopClass{CName=a.CName,ComId=a.ComId }).ToList();
             return JsonConvert.SerializeObject(list);
         }
+   
+
 
         //购物车
         public ActionResult BuyCartK()
@@ -161,7 +167,7 @@ namespace G2_MVC_EF.Controllers
             }
             else
             {
-                return View();
+                return RedirectToAction("Login");
             }
                       
         }
@@ -175,16 +181,73 @@ namespace G2_MVC_EF.Controllers
         public ActionResult Xu(User model,int id, HttpPostedFileBase UserPicUrl)
         {
             User ss= db.User.FirstOrDefault(a => a.Uid == id);
-            string p = UserPicUrl.FileName;
-            string pach = Server.MapPath("~/images/" + p);
-            //保存到服务器指定文件夹中
-            UserPicUrl.SaveAs(pach);
-            ss.UserPicUrl= p;
+            if (UserPicUrl != null &&UserPicUrl.ContentLength != 0)
+            {
+                string p = UserPicUrl.FileName;
+                string pach = Server.MapPath("~/images/" + p);
+                //保存到服务器指定文件夹中
+                UserPicUrl.SaveAs(pach);
+                ss.UserPicUrl = p;
+            }
             ss.UserNickname = model.UserNickname;
             ss.Userphone = model.Userphone;
             ss.UserType = model.UserType;
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+       
+        public ActionResult mima2(User model, int id,string pwd)
+        {
+            User ss = db.User.FirstOrDefault(a => a.Uid == id);
+            if (pwd== ss.UserPwd)
+            {
+                ss.UserPwd= model.UserPwd;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+           else
+            {
+                return RedirectToAction("mima");
+            }
+       
+        }
+         public ActionResult mima()
+        {
+            var id = Convert.ToInt32(Session["userID"]);
+            ViewBag.ll = db.User.FirstOrDefault(a => a.Uid == id);
+            return View();
+        }
+        public ActionResult zhu()
+        {
+            var id = Convert.ToInt32(Session["userID"]);
+            User book = db.User.FirstOrDefault(b => b.Uid == id);
+            db.User.Remove(book);
+            db.SaveChanges();
+            //跳转到Index页面
+            return RedirectToAction("Login");
+        }
+        [HttpPost]
+        public ActionResult pinglun(int id,string ComIdText)
+        {
+
+            var idS = Convert.ToInt32(Session["userID"]);
+       
+            Comment ss = new Comment();
+            ss.ComIdText = ComIdText;
+            ss.ComId = id;
+            ss.Uid = idS;
+            db.Comment.Add(ss);
+            int i=   db.SaveChanges();
+            if (i>0)
+            {
+                return Content($"<script>alert('评论添加成功');window.location.href='/Index/shangpxq?id={id}';</script>");
+            }
+            else
+            {
+                return Content("<script>alert('评论添加失败！');</script>");
+            }
+           
+            
         }
     }
 }

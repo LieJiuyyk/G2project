@@ -10,6 +10,8 @@ namespace G2_MVC_EF.Models
         public MyDBContext()
             : base("name=MyDBContext1")
         {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         public virtual DbSet<Brand> Brand { get; set; }

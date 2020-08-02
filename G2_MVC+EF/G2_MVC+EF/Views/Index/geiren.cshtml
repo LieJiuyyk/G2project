@@ -3,12 +3,16 @@
     Layout = null;
 }
 
-
 <!DOCTYPE html>
+
 <html lang="zh-cn">
 
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+
     <link href="~/Content/ge.css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -217,6 +221,33 @@
                     margin-left: 15px;
                 }
 
+        /*阴影背景*/
+
+        .login,
+        .accounts_list,
+        .accounts_list li a.a1:hover,
+        .accounts_list li a.a2:hover,
+        .accounts_list li a.a3:hover,
+        .accounts_list li a.a4:hover,
+        .password_list,
+        .accounts_list li a.pw1:hover,
+        .accounts_list li a.pw2:hover,
+        .accounts_list li a.pw3:hover,
+        .accounts_list li a.pw4:hover,
+        .toolbox_list,
+        .toolbox_list li a.t1:hover,
+        .toolbox_list li a.t2:hover,
+        .toolbox_list li a.t3:hover,
+        .toolbox_list li a.t4:hover,
+        .toolbox_list li a.t5:hover,
+        a.title_icon:hover,
+        .ue_warn,
+        .r_top,
+        .r_bottom {
+        }
+
+        /* CSS Bg */
+
         a.close,
         a.close:hover,
         a.t_close,
@@ -252,8 +283,26 @@
             opacity: 0.3;
         }
     </style>
+    <div class="round" id="login_alert" style="display:none;z-index:10003;left:30%;top:30%;">
+        <div class="r_top"></div>
+        <div class="round_container">
+            <div class="r_title">
+                用户登录
+                <a class="close" href="javascript:alert_login_close();"></a>
+            </div>
+            <div class="round_content">
+                <iframe style="margin: auto;width: 370px;height: 340px;background-color:transparent;" allowTransparency="true" name="embed_login_frame"
+                        id="embed_login_frame" frameborder="0" scrolling="no" src=""></iframe>
 
+            </div>
+        </div>
+        <div class="r_bottom"></div>
+    </div>
     <script>
+
+		/*
+		 *兼容IE6的居中定位
+		 */
 		function setCenter() {
 			$("#login_alert").css("position", "absolute");
 			var FrameMarginTop = document.documentElement.scrollTop - document.getElementById("login_alert").offsetHeight / 2 + "px";
@@ -264,12 +313,7 @@
 		function reload_top(n) {
 			document.cookie = "pt_mbkey=; EXPIRES=Fri, 02-Jan-1970 00:00:00 GMT; PATH=/; DOMAIN=.qq.com";
 			top.location.reload();
-        }
-        function Shanchu(key) {
-            if (confirm("确定注销吗?")) {
-                window.location.href = "/Index/zhu/" + key;
-            }
-        }
+		}
     </script>
     <div id="app" class="container">
         <div id="banner" class="banner">
@@ -279,10 +323,6 @@
                         <div class="header-left">
                             <img src="/img/ico_logo.png" class="header-logo">
                         </div>
-
-                    </div>
-                    <div style="font-size:40px;margin-top:50px;text-align:center;">
-                        个人安全中心
                     </div>
                 </div>
 
@@ -302,7 +342,7 @@
                 <ul>
                     <li>
                         <div class="content-elem find-pwd">
-                            <a target="_blank" href="/Index/mima">
+                            <a target="_blank" href="#">
                                 <i class="sprite-content pwd-manage-icon"></i>
                                 <p class="title">密码管理</p>
                                 <p class="desc">找回、修改QQ密码，从这里开始</p>
@@ -310,41 +350,96 @@
                         </div>
                     </li>
                     <li>
-                        <a onclick="Shanchu( @ViewBag.lis.Uid);">
+                        <a href="#">
                             <div class="content-elem mb-tools">
-
-                                <i class="sprite-content mb-tools-icon"></i>
-                                <p class="title">账号注销</p>
-                                <p class="desc">申请注销账号（请好好思考）</p>
-
+                                <a href="javascript:alert_login('')">
+                                    <i class="sprite-content mb-tools-icon"></i>
+                                    <p class="title">账号注销</p>
+                                    <p class="desc">申请注销账号</p>
+                                </a>
                             </div>
                         </a>
                     </li>
                     <li>
-                        <a href="/index/ziliao">
-                            <div class="content-elem unfreeze-account">
-
+                        <div class="content-elem unfreeze-account">
+                            <a target="_blank" href="#">
                                 <i class="sprite-content unfreeze-account-icon"></i>
                                 <p class="title">个人资料</p>
-                                <p class="desc">完善个人资料，修改个人资料</p>
-
-                            </div>
-                        </a>
+                                <p class="desc">头像，资料管理</p>
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
-
-
-        <div id="footer_new">
-
-            <p><span>fesdsafgt © 2018</span>. dafsgfbvdcsd. </p>
+        <div class="more">
+            <div class="more-wrap clearfix">
+                <div class="more-title">更多功能</div>
+                <div class="more-divide-line"></div>
+                <ul>
+                    <li>
+                        <div class="more-elem">
+                            <a target="_blank" href="#">
+                                <i class="sprite-more sprite-icon independent-pwd"></i>
+                                <p class="title">独立密码</p>
+                                <p class="desc">忘记独立密码可重新设置</p>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="more-elem">
+                            <div target="_blank" href="javascript:void(0);">
+                                <i class="sprite-more sprite-icon show-qrcode freeze-account"></i>
+                                <p class="title">紧急冻结</p>
+                                <p class="desc hide-text">帐号被盗或异常可紧急冻结</p>
+                                <p class="desc show-text">扫码完成冻结，禁止坏人登录</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="more-elem" v-else>
+                            <div target="_blank" href="javascript:void(0);">
+                                <i class="sprite-more sprite-icon show-qrcode login-protect"></i>
+                                <p class="title">QQ登录保护</p>
+                                <p class="desc hide-text">登录验证密保，阻止坏人登录</p>
+                                <p class="desc show-text">扫码下载手机QQ，开启设备锁</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="more-elem" v-else>
+                            <div target="_blank" href="javascript:void(0);">
+                                <i class="sprite-more sprite-icon show-qrcode game-protect"></i>
+                                <p class="title">游戏保护</p>
+                                <p class="desc hide-text">登录验证密保，保护游戏财产</p>
+                                <p class="desc show-text">扫码下载手机App，开启游戏保护</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="more-elem" v-else>
+                            <div target="_blank" href="javascript:void(0);">
+                                <i class="sprite-more sprite-icon show-qrcode mail-protect"></i>
+                                <p class="title">邮箱保护</p>
+                                <p class="desc hide-text">登录验证密保，防止隐私泄漏</p>
+                                <p class="desc show-text">扫码下载手机App，开启邮箱保护</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <script type="text/javascript">
+    </div>
+
+    <div id="footer_new">
+        <!-- <p><a href="#" target="_blank">关于腾讯</a>|<a href="#" target="_blank">About Tencent</a></p> -->
+        <p>Copyright © 2018</span>. All Rights Reserved. </p>
+    </div>
+    <script type="text/javascript">
 		var cur_time = new Date();
 		var cur_year = cur_time.getFullYear();
 		document.getElementById("current_year").innerHTML = cur_year;
-        </script>
+    </script>
 
 </body>
 
@@ -368,6 +463,19 @@
 	function onAppDownloadHide() {
 		document.getElementById('header-right-qrcode').style.display = 'none';
 	}
-
+/*
+    window.onload = function() {
+		if (document.documentElement.clientHeight < 1050) {
+			document.getElementById('banner').style.height = '300px';
+		}
+	}
+	window.onresize = function() {
+		if (document.documentElement.clientHeight < 1050) {
+			document.getElementById('banner').style.height = '300px';
+		}
+		else {
+			document.getElementById('banner').style.height = '360px';
+		}
+	}
+*/
 </script>
-
